@@ -1,0 +1,675 @@
+Step 1: Open the terminal --> wsl 
+
+The Windows Subsystem for Linux is not installed. You can install by running 'wsl.exe --install'.
+For more information please visit https://aka.ms/wslinstall
+
+Press any key to install Windows Subsystem for Linux.
+Press CTRL-C or close this window to cancel.
+This prompt will time out in 60 seconds.
+
+Step 2: wsl.exe --install
+
+Once restart the machine
+
+Step 3: wsl --install
+
+Create a default Unix user account: kmit
+New password:
+Retype new password:
+
+Step 4: sudo apt update
+
+Step 5: sudo apt install redis-server -y
+
+Step 6: sudo service redis-server start
+
+Step 7: xyz@DESKTOP-L53AF3G:/mnt/c/WINDOWS/system32$ redis-cli ping
+PONG
+
+Step 8: Enable Redis to start automatically
+sudo systemctl enable redis-server
+
+
+Step 9: xyz@DESKTOP-L53AF3G:/mnt/c/WINDOWS/system32$ redis-cli
+127.0.0.1:6379> set test "hello"
+OK
+127.0.0.1:6379> get test
+"hello"
+127.0.0.1:6379> exit
+
+
+Alternative: Redis with Docker (also great)
+=============================================
+
+Step 1: Install Desktop Docker
+
+Step 2: docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+
+https://docs.google.com/forms/d/e/1FAIpQLSeA9hx6JZP92MW5HvwesenrcuKsIt0QYajDVkl5g4PonX2jAA/viewform?usp=publish-editor
+
+List containers
+docker ps    
+docker ps -a 
+
+Start a container
+docker start redis-stack
+
+Stop a container
+docker stop redis-stack
+
+Restart a container
+docker restart redis-stack
+
+Remove container (optional)
+docker rm redis-stack
+
+Redis-Stack is exposed onto
+
+http://localhost:8001
+
+Stop / remove
+================
+docker stop redis-stack
+docker rm redis-stack
+
+
+
+In each application
+================================
+
+cd server
+npm init -y
+npm install express ioredis cors
+node index.js
+
+cd client
+npm run dev 
+
+
+Redis Commands
+==================
+
+1) docker start redis-stack
+
+2) docker ps
+
+3) docker exec -it redis-stack redis-cli
+
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379> set apple 300
+OK
+127.0.0.1:6379> get apple
+"300"
+127.0.0.1:6379> set apple 320
+OK
+127.0.0.1:6379> get apple
+"320"
+127.0.0.1:6379> setex apple 40 350
+OK
+127.0.0.1:6379> get apple
+"350"
+127.0.0.1:6379> get apple
+(nil)
+127.0.0.1:6379> set apple 320 ex 20
+OK
+127.0.0.1:6379> get apple
+"320"
+127.0.0.1:6379> get apple
+(nil)
+127.0.0.1:6379> psetex apple 10000 320
+OK
+127.0.0.1:6379> get apple
+"320"
+127.0.0.1:6379> get apple
+(nil)
+127.0.0.1:6379> set apple 300 px 4000
+OK
+127.0.0.1:6379> get apple
+"300"
+127.0.0.1:6379> get apple
+(nil)
+127.0.0.1:6379> set apple 380
+OK
+127.0.0.1:6379> get apple
+"380"
+127.0.0.1:6379> set apple 400
+OK
+127.0.0.1:6379> get apple
+"400"
+127.0.0.1:6379> setnx apple 420
+(integer) 0
+127.0.0.1:6379> get apple
+"400"
+127.0.0.1:6379> setnx wipro 392
+(integer) 1
+127.0.0.1:6379> setnx oppo 400 px 10000
+(error) ERR wrong number of arguments for 'setnx' command
+127.0.0.1:6379> set oppo 400 nx px 4000
+OK
+127.0.0.1:6379> get oppo
+"400"
+127.0.0.1:6379> get oppo
+(nil)
+127.0.0.1:6379> set oppo 400 nx px 4000
+OK
+127.0.0.1:6379> strlen apple
+(integer) 3
+127.0.0.1:6379> get apple
+"400"
+127.0.0.1:6379> set name vishal
+OK
+127.0.0.1:6379> strlen name
+(integer) 6
+127.0.0.1:6379> mset name1 vishal name2 venu name3 rao
+OK
+127.0.0.1:6379> get name2
+"venu"
+127.0.0.1:6379> mget name1 name2 name3
+1) "vishal"
+2) "venu"
+3) "rao"
+127.0.0.1:6379> keys *
+1) "name3"
+2) "wipro"
+3) "apple"
+4) "name2"
+5) "name1"
+6) "name"
+127.0.0.1:6379> get apple
+"400"
+127.0.0.1:6379> get wipro
+"392"
+127.0.0.1:6379> incr apple
+(integer) 401
+127.0.0.1:6379> incr name
+(error) ERR value is not an integer or out of range
+127.0.0.1:6379> decr apple1
+(integer) -1
+127.0.0.1:6379> get apple1
+"-1"
+127.0.0.1:6379> incrby apple 5
+(integer) 406
+127.0.0.1:6379> incrbyfloat apple 4.5
+"410.5"
+127.0.0.1:6379> decrby apple 9.5
+(error) ERR value is not an integer or out of range
+127.0.0.1:6379> get apple
+"410.5"
+127.0.0.1:6379> decrby wipro 5
+(integer) 387
+127.0.0.1:6379> decrbyfloat apple 9.5
+(error) ERR unknown command 'decrbyfloat', with args beginning with: 'apple' '9.5'
+
+127.0.0.1:6379> get apple
+"410.5"
+127.0.0.1:6379> incrbyfloat apple -0.5
+"410"
+127.0.0.1:6379> incrbyfloat apple -5
+"405"
+127.0.0.1:6379> incrby apple -5
+(integer) 400
+127.0.0.1:6379> incrbyfloat apple -5.5
+"394.5"
+127.0.0.1:6379> incrbyfloat apple -0.5
+"394"
+127.0.0.1:6379> keys *
+1) "name3"
+2) "wipro"
+3) "apple"
+4) "name2"
+5) "name1"
+6) "apple1"
+7) "name"
+127.0.0.1:6379> del name3
+(integer) 1
+127.0.0.1:6379> del name name1 name2
+(integer) 3
+127.0.0.1:6379> keys *
+1) "wipro"
+2) "apple"
+3) "apple1"
+127.0.0.1:6379> set name hello
+OK
+127.0.0.1:6379> append name vishal
+(integer) 11
+127.0.0.1:6379> get name
+"hellovishal"
+127.0.0.1:6379> keys *
+1) "wipro"
+2) "apple"
+3) "apple1"
+4) "name"
+127.0.0.1:6379> flushall
+OK
+127.0.0.1:6379> keys *
+(empty array)
+
+
+Actually this is the good way
+================================
+set <entity>:<id> value
+
+id    name
+
+1.    vishal
+2.    venu
+3.    john
+
+set user:1 vishal
+set user:2 venu
+set user:3 john
+=================================================
+how to implement it in vscode
+================================================
+
+open a terminal type ----->   code . ---> VS Code gets open
+
+create a new folder ----> redis-example
+
+npm init -y
+
+npm i ioredis
+
+String.js
+=================
+const client = require ('./client');
+
+async function init(){
+const result = await client.get('user:3');
+console.log("Result -> ",result);
+}
+init();
+
+
+client.js
+======================
+const {Redis} = require('ioredis');
+
+const client = new Redis();
+
+module.exports = client;
+
+If we want to implement in React
+===========================================
+
+✅ Recommended (Correct) Approach — React + Node + Redis
+============================================
+STEP 1 — Backend (Node + Redis)
+Install dependencies (in a separate folder, e.g., server/)
+=============================================
+mkdir server
+cd server
+npm init -y
+npm install express ioredis cors
+=============================================
+server/index.js (API for React to call)
+=============================================
+const express = require("express");
+const cors = require("cors");
+const { Redis } = require("ioredis");
+
+const app = express();
+const client = new Redis(); // connects to 127.0.0.1:6379
+
+app.use(cors());
+
+app.get("/user/:id", async (req, res) => {
+  const id = req.params.id;
+  const value = await client.get(`user:${id}`);
+  res.send(value);
+});
+
+app.listen(5000, () => console.log("Server running on 5000"));
+
+
+=============================================
+Run backend:
+=============================================
+node index.js
+
+=============================================
+✅ STEP 2 — React (Vite) Frontend
+=============================================
+Create Vite project:
+=============================================
+npm create vite@latest redis-react-app -- --template react
+
+cd redis-react-app
+
+npm install axios
+
+npm run dev
+====================================
+src/App.jsx (React version of your code)
+=========================================
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+function App() {
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/user/3")
+      .then(res => {
+        console.log("Result ->", res.data);
+        setValue(res.data);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  return (
+    <h2>user:3 = {value || "Loading..."}</h2>
+  );
+}
+
+export default App;
+
+
+============================================
+
+Storing Lists in Redis: Insertion Commands
+===========================================
+
+127.0.0.1:6379> lpush cars bmw tesla audi honda
+(integer) 4
+127.0.0.1:6379> lrange cars 0 2
+1) "honda"
+2) "audi"
+3) "tesla"
+127.0.0.1:6379> lrange cars 0 0
+1) "honda"
+127.0.0.1:6379> lrange cars 0 1
+1) "honda"
+2) "audi"
+127.0.0.1:6379> lrange cars 0 -1
+1) "honda"
+2) "audi"
+3) "tesla"
+4) "bmw"
+127.0.0.1:6379> lrange cars  -1 0
+(empty array)
+127.0.0.1:6379> lpop cars
+"honda"
+127.0.0.1:6379> lrange cars 0 -1
+1) "audi"
+2) "tesla"
+3) "bmw"
+127.0.0.1:6379> lpop cars 2
+1) "audi"
+2) "tesla"
+127.0.0.1:6379> lpop cars
+"bmw"
+127.0.0.1:6379> lrange cars 0 0
+(empty array)
+127.0.0.1:6379> rpush cars bmw tesla audi honda
+(integer) 4
+127.0.0.1:6379> lrange cars 0 -1
+1) "bmw"
+2) "tesla"
+3) "audi"
+4) "honda"
+127.0.0.1:6379> rpop cars
+"honda"
+127.0.0.1:6379> lrange cars 0 -1
+1) "bmw"
+2) "tesla"
+3) "audi"
+127.0.0.1:6379> rpop cars 3
+1) "audi"
+2) "tesla"
+3) "bmw"
+127.0.0.1:6379> lrange cars 0 -1
+(empty array)
+
+
+
+
+Storing Lists in Redis: Modification Commands
+=============================================
+
+127.0.0.1:6379> llen cars
+(integer) 0
+127.0.0.1:6379> llen car
+(integer) 0
+127.0.0.1:6379> rpush cars audi tesla bmw honda
+(integer) 4
+127.0.0.1:6379> llen cars
+(integer) 4
+127.0.0.1:6379> lindex cars 2
+"bmw"
+127.0.0.1:6379> lrange cars 0 -1
+1) "audi"
+2) "tesla"
+3) "bmw"
+4) "honda"
+127.0.0.1:6379> lset cars 2 tat
+OK
+127.0.0.1:6379> lset cars 2 tata
+OK
+127.0.0.1:6379> lrange cars 0 -1
+1) "audi"
+2) "tesla"
+3) "tata"
+4) "honda"
+127.0.0.1:6379> lpushx cars toyota
+(integer) 5
+127.0.0.1:6379> lrange cars 0 -1
+1) "toyota"
+2) "audi"
+3) "tesla"
+4) "tata"
+5) "honda"
+127.0.0.1:6379> lpushx car toyota
+(integer) 0
+127.0.0.1:6379> lrange car 0 -1
+(empty array)
+127.0.0.1:6379> lpush numbers 1 2 3 4 5 7 8 9 10
+(integer) 9
+127.0.0.1:6379> linsert numbers before 5 6
+(integer) 10
+127.0.0.1:6379> lrange numbers 0 -1
+ 1) "10"
+ 2) "9"
+ 3) "8"
+ 4) "7"
+ 5) "6"
+ 6) "5"
+ 7) "4"
+ 8) "3"
+ 9) "2"
+10) "1"
+127.0.0.1:6379> linsert numbers after 1 0
+(integer) 11
+127.0.0.1:6379> lrange numbers 0 -1
+ 1) "10"
+ 2) "9"
+ 3) "8"
+ 4) "7"
+ 5) "6"
+ 6) "5"
+ 7) "4"
+ 8) "3"
+ 9) "2"
+10) "1"
+11) "0"
+
+
+
+Storing Set in Redis: Insertion Commands
+=========================================
+
+127.0.0.1:6379> sadd fruits apple banana orange banana
+(integer) 3
+127.0.0.1:6379> smembers fruits
+1) "apple"
+2) "banana"
+3) "orange"
+127.0.0.1:6379> sismember fruits mango
+(integer) 0
+127.0.0.1:6379> sismember fruits banana
+(integer) 1
+127.0.0.1:6379> scard fruits
+(integer) 3
+127.0.0.1:6379> sadd fruits1 apple mango guava
+(integer) 3
+127.0.0.1:6379> smembers fruits
+1) "apple"
+2) "banana"
+3) "orange"
+127.0.0.1:6379> smembers fruits1
+1) "apple"
+2) "mango"
+3) "guava"
+127.0.0.1:6379> sdiff fruits fruits1
+1) "banana"
+2) "orange"
+127.0.0.1:6379> sdiff fruits1 fruits
+1) "mango"
+2) "guava"
+
+Storing Set in Redis: Modification Commands
+================================================
+
+127.0.0.1:6379> sunion fruits fruits1
+1) "apple"
+2) "banana"
+3) "orange"
+4) "mango"
+5) "guava"
+127.0.0.1:6379> srem fruits apple
+(integer) 1
+127.0.0.1:6379> smembers fruits
+1) "banana"
+2) "orange"
+127.0.0.1:6379> smembers fruits1
+1) "apple"
+2) "mango"
+3) "guava"
+127.0.0.1:6379> spop fruits1 1
+1) "guava"
+127.0.0.1:6379> spop fruits1 1
+1) "mango"
+127.0.0.1:6379> smembers fruits
+1) "banana"
+2) "orange"
+127.0.0.1:6379> smembers fruits1
+1) "apple"
+127.0.0.1:6379> smove fruits fruits1 orange
+(integer) 1
+127.0.0.1:6379> smembers fruits
+1) "banana"
+127.0.0.1:6379> smembers fruits1
+1) "apple"
+2) "orange"
+
+Storing Sorted Set in Redis: Insertion Commands
+================================================
+
+127.0.0.1:6379> zadd countries 120 USA 45 Canada 50 Ireland
+(integer) 3
+127.0.0.1:6379> zadd countries 120 USA 45 Canada 50 Ireland 45 canada
+(integer) 1
+127.0.0.1:6379> zadd countries 120 USA 45 Canada 50 Ireland 45 Canada
+(integer) 0
+127.0.0.1:6379> zadd countries 120 USA 45 Canada 50 Ireland 120 USA
+(integer) 0
+127.0.0.1:6379> zrange countries 0 -1
+1) "Canada"
+2) "canada"
+3) "Ireland"
+4) "USA"
+127.0.0.1:6379> zrangebyscore countries 40 60
+1) "Canada"
+2) "canada"
+3) "Ireland"
+127.0.0.1:6379> zcard countries
+(integer) 4
+127.0.0.1:6379> zcount countries 40 50
+(integer) 3
+
+Storing Sorted Set in Redis: Utility Commands
+==============================================
+
+127.0.0.1:6379> zrange countries 0 -1
+1) "Canada"
+2) "canada"
+3) "Ireland"
+4) "USA"
+127.0.0.1:6379> zrem countries USA
+(integer) 1
+127.0.0.1:6379> zrange countries 0 -1
+1) "Canada"
+2) "canada"
+3) "Ireland"
+127.0.0.1:6379> zrank countries Canada
+(integer) 0
+127.0.0.1:6379> zrank countries Ireland
+(integer) 2
+127.0.0.1:6379> zrange countries 0 -1
+1) "Canada"
+2) "canada"
+3) "Ireland"
+127.0.0.1:6379> zrank countries Canada
+(integer) 0
+127.0.0.1:6379> zrank countries canada
+(integer) 1
+127.0.0.1:6379> zrevrank countries canada
+(integer) 1
+127.0.0.1:6379> zrevrank countries Canada
+(integer) 2
+127.0.0.1:6379> zscore countries  Ireland
+"50"
+
+Storing Hashes in Redis
+======================================
+
+127.0.0.1:6379> hmset finance 123 john
+OK
+127.0.0.1:6379> hmset finance 124 paul 125 carl 126 jane
+OK
+127.0.0.1:6379> hgetall finance
+1) "123"
+2) "john"
+3) "124"
+4) "paul"
+5) "125"
+6) "carl"
+7) "126"
+8) "jane"
+127.0.0.1:6379> hget finance 124
+"paul"
+127.0.0.1:6379> hexists finance 366
+(integer) 0
+127.0.0.1:6379> hexists finance 123
+(integer) 1
+127.0.0.1:6379> hdel finanace 124
+(integer) 0
+127.0.0.1:6379> hdel finance 124
+(integer) 1
+127.0.0.1:6379> hget finance 123
+"john"
+127.0.0.1:6379> hsetnx finance 123 mike
+(integer) 0
+127.0.0.1:6379> hget finance 123
+"john"
+127.0.0.1:6379> hset finance 123 mike
+(integer) 0
+127.0.0.1:6379> hget finance 123
+"mike"
+127.0.0.1:6379> hsetnx finance 123 john
+(integer) 0
+127.0.0.1:6379> hget finance 123
+
+
+
+
+
+
+
+
+
+
+
+
+

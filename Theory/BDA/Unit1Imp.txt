@@ -1,0 +1,14 @@
+BIG DATA ANALYTITS
+UNIT-I
+IMPORTANT QUESTIONS
+
+1.	Explain the differences between traditional data processing systems and Big Data systems with examples?
+2.	Discuss the 3Vs of Big Data with examples?
+3.	Describe the architecture of HDFS and explain the responsibilities of NameNode and DataNode?
+4.	Explain the Big Data life cycle with a neat diagram?
+5.	Compare HDFS Federation and HDFS High Availability?
+6.	Explain about Anatomy of File Read operation?
+7.	Discuss the anatomy of a file write operation in HDFS?
+8.	What is parallel copying (distcp) in Hadoop? Explain how it helps in balancing an HDFS cluster?
+9.	Illustrate the process of writing and reading a file in HDFS with a neat diagram?
+10.	Design and demonstrate basic HDFS shell commands for directory creation, file upload, and viewing content?

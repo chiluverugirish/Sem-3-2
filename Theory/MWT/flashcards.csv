@@ -1,0 +1,75 @@
+What is the formal definition of a distributed system regarding its components and communication?,A system where components on networked computers communicate and coordinate actions solely by passing messages.
+"In a distributed system, how does a collection of autonomous computing elements appear to its users?",It appears as a single coherent system.
+Term: Node,"Definition: A single machine in a system, such as a physical server, VM, or container, with its own CPU and memory."
+What is a 'process' in the context of a distributed system node?,"A running program on a node, where multiple processes can handle different roles like web serving or database management."
+"In a distributed system, what specific entity carries messages between nodes and introduces issues like packet drops?",The network.
+Which architectural component in a realistic distributed system routes traffic from clients to fleets of stateless app services?,API gateway and load balancers.
+What is the primary role of a message broker in a distributed architecture?,It connects the online request path with asynchronous background workers.
+What type of storage is used in distributed systems for large blobs like images or logs?,Object storage.
+"The ability of nodes to share hardware, software, and data across a network is known as _____.",Resource Sharing
+Characteristic: Openness,Definition: The degree to which a system can be extended through published interfaces and standard protocols like HTTP.
+Which characteristic refers to multiple processes running simultaneously on different nodes accessing shared resources?,Concurrency
+What are the three dimensions of scalability in distributed systems?,"Size scalability, geographic scalability, and administrative scalability."
+The ability of a system to operate correctly even when one or more components fail is termed _____.,Fault Tolerance
+What is the core design goal of 'Transparency' in distributed systems?,To hide the distributed nature of the system from users and application programmers.
+Which type of transparency hides the physical location of resources?,Location Transparency
+What does 'Access Transparency' hide from the user?,Differences in data representation and resource access mechanisms.
+Which transparency type hides the fact that multiple processes may be operating on shared resources concurrently?,Concurrency Transparency
+Term: Replication Transparency,Definition: Hiding the use of multiple copies of a resource used to enhance reliability and performance.
+Which transparency type allows a system to expand in scale without changing its structure or algorithms?,Scaling Transparency
+How does 'Failure Transparency' benefit a distributed system?,"It hides the failure and recovery of components, allowing the system to continue operating."
+What does 'Mobility Transparency' conceal within a distributed system?,The movement of resources and clients within the system.
+What is the primary purpose of middleware in addressing heterogeneity?,"To provide a common programming model and protocols that bridge differences in hardware, OS, and languages."
+"According to the CAP theorem, what three guarantees cannot be simultaneously achieved by a distributed data store?","Consistency, Availability, and Partition Tolerance."
+CAP Theorem: Consistency ($C$),Definition: Every read operation receives the most recent write or an error.
+CAP Theorem: Availability ($A$),Definition: Every request receives a non-error response without a guarantee it contains the most recent write.
+CAP Theorem: Partition Tolerance ($P$),Definition: The system continues to operate despite messages being dropped or delayed by the network between nodes.
+Why is it impossible to have a perfectly synchronised global time in a distributed system?,"Each node has its own independent clock, and there is no single global clock."
+Which mechanism allows a program on one node to execute a procedure on a remote node as if it were local?,Remote Procedure Call (RPC)
+What is the main advantage of Message-Oriented Middleware (MOM) over synchronous models?,It uses an asynchronous model with queues to decouple components and improve resilience.
+Contrast 'Failure' in centralized versus distributed systems.,Centralized systems have a single point of failure; distributed systems have independent failures and high fault tolerance.
+How does vertical scaling (scaling up) increase system capacity?,"By adding more resources (CPU, RAM) to a single existing server."
+What is a major hardware-related disadvantage of vertical scaling?,It is limited by the physical constraints of the machine and creates a single point of failure.
+Term: Horizontal Scaling (Scaling Out),Definition: Increasing capacity by adding more machines or nodes to a pool of resources.
+What is the primary architectural drawback of horizontal scaling?,Significant increase in complexity requiring load balancers and data consistency management.
+"In a distributed system, what is a 'partial failure'?","A scenario where some components fail while others continue to operate, potentially leading to inconsistent states."
+Failure Model: Crash Failure,Description: A server halts and remains permanently stopped; detected via heartbeats.
+Which failure model is characterised by a server failing to send or receive messages?,Omission Failure
+Failure Model: Timing Failure,Description: A server's response is correct but arrives outside the specified time interval.
+Which failure model is considered the most challenging because the server behaves maliciously or arbitrarily?,Byzantine Failure
+What is a 'split-brain' scenario in a distributed system?,A network partition that divides the system into isolated groups that cannot agree on the system state.
+Technique: Checkpointing,Role: Periodically saving process state to stable storage to enable recovery from the last saved point.
+What is the purpose of a 'Circuit Breaker' in fault tolerance?,"To prevent a failing service from being called repeatedly, thereby stopping cascading failures."
+How is 'Availability' typically quantified in distributed systems?,"In terms of 'nines' (e.g., $99.999\%$ or 'five nines')."
+What is a 'Cascading Failure'?,"A chain reaction where one service failure overloads dependent services, causing them to fail as well."
+How do Blue/Green deployments help achieve high availability?,By allowing routine updates and maintenance with 'zero-downtime'.
+What consistency requirement ensures all nodes agree on the state of data at any given time?,Consistency
+What is 'replication lag'?,The delay in propagating a write operation from a primary node to all other replica nodes.
+Consistency Model: Strong Consistency,"Guarantee: Every read returns the most recent write, resulting in the highest latency."
+Which consistency model guarantees that replicas will eventually converge if no new updates are made?,Eventual Consistency
+"In quorum-based protocols, what is the standard formula to guarantee a read overlaps with the latest write?",$R + W > N$ (Read Quorum + Write Quorum > Total Nodes).
+What are the three primary causes of latency in distributed systems?,"Network delay, geographical distribution, and coordination/replication overhead."
+Why is middleware often described as 'software glue'?,It resides between the OS and applications to facilitate communication and data management.
+"In the software hierarchy, where does middleware sit relative to the Operating System and Application Framework?",Above the Operating System and below the Application Framework.
+What is the 'Scope' difference between an Operating System and Middleware?,OS is system-wide (single machine); Middleware is network-wide or enterprise-wide.
+Term: Application Framework (AF),"Definition: A reusable environment that dictates application architecture, often using Inversion of Control (IoC)."
+What is 'Inversion of Control' (IoC) in application frameworks?,A design principle where the framework calls the user's code rather than the user's code calling the framework.
+What is the primary role of Data Middleware?,To abstract complexities of diverse data sources and provide a consistent interface for applications.
+Give two examples of standard APIs used as Data Middleware.,ODBC (Open Database Connectivity) and JDBC (Java Database Connectivity).
+How does Messaging Middleware improve system responsiveness?,By allowing asynchronous communication where the sender does not wait for the receiver to acknowledge the message.
+Term: Distributed Tracing,Definition: Tracking the full path of a single request as it travels through multiple microservices to pinpoint bottlenecks.
+What was a major limitation of early standalone/monolithic systems?,No scalability beyond a single machine and no fault tolerance (any failure halted the whole system).
+How did Client-Server architecture improve upon monolithic systems?,By enabling resource sharing and centralized data management.
+What role did Enterprise Service Buses (ESBs) play in Service-Oriented Architecture (SOA)?,"They provided message routing, protocol transformation, and service orchestration."
+Define 'Microservices Architecture'.,"An approach where a system is divided into small, independent services responsible for specific business jobs."
+How does microservices architecture handle failures differently than monolithic systems?,"Failures are more common due to many moving parts, but they can be isolated to prevent spreading."
+What are the four key pillars of Cloud-Native applications?,"Microservices, Containers/Orchestration, DevOps/Automation, and Open Standards."
+What is the role of Kubernetes in a cloud-native stack?,"It acts as an orchestration platform to manage container placement, scaling, and failure recovery."
+How does middleware achieve 'Decoupling' in microservices?,By introducing an intermediary communication layer that separates producers from consumers.
+How does caching middleware improve performance for a news portal?,"By storing frequently accessed article data in memory, reducing the need for repeated database queries."
+What is a 'Dead-letter mechanism' in messaging middleware?,A system that captures failed requests and handles them gracefully once dependencies recover.
+What is a 'Service Mesh' in a cloud-native middleware stack?,"Middleware that handles internal service-to-service communication, traffic routing, and security."
+"In the FoodFast case study, why would the system fail without a caching layer during peak traffic?","Every request would synchronously access the database, leading to increased locks and eventual unresponsiveness."
+What is the role of monitoring middleware like Prometheus?,"To track real-time operational metrics like CPU utilization, latency, and error rates."
+Why is 'Sequential Consistency' used in distributed file systems?,"It ensures operations from all processes appear to execute in a specific, consistent sequential order."
+What is the primary benefit of 'Open Standards' in cloud-native ecosystems?,"They handle cross-cutting concerns like logging and discovery, letting developers focus on business logic."
