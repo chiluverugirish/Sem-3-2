@@ -1,0 +1,15 @@
+{
+  "name": "orders-redis-middleware-demo",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "worker:sub": "node workers/orderEventSubscriber.js",
+    "worker:jobs": "node workers/jobsWorker.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2",
+    "redis": "^4.6.13"
+  }
+}

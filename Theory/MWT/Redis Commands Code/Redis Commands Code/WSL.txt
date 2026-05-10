@@ -1,0 +1,84 @@
+Step 1: Open the terminal --> wsl 
+
+The Windows Subsystem for Linux is not installed. You can install by running 'wsl.exe --install'.
+For more information please visit https://aka.ms/wslinstall
+
+Press any key to install Windows Subsystem for Linux.
+Press CTRL-C or close this window to cancel.
+This prompt will time out in 60 seconds.
+
+Step 2: wsl.exe --install
+
+Once restart the machine
+
+Step 3: wsl --install
+
+Create a default Unix user account: kmit
+New password:
+Retype new password:
+
+Step 4: sudo apt update
+
+Step 5: sudo apt install redis-server -y
+
+Step 6: sudo service redis-server start
+
+Step 7: xyz@DESKTOP-L53AF3G:/mnt/c/WINDOWS/system32$ redis-cli ping
+PONG
+
+Step 8: Enable Redis to start automatically
+sudo systemctl enable redis-server
+
+
+Step 9: xyz@DESKTOP-L53AF3G:/mnt/c/WINDOWS/system32$ redis-cli
+127.0.0.1:6379> set test "hello"
+OK
+127.0.0.1:6379> get test
+"hello"
+127.0.0.1:6379> exit
+
+
+Alternative: Redis with Docker (also great)
+=============================================
+
+Step 1: Install Desktop Docker
+
+Step 2: docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+
+List containers
+docker ps    
+docker ps -a 
+
+Start a container
+docker start redis-stack
+
+Stop a container
+docker stop redis-stack
+
+Restart a container
+docker restart redis-stack
+
+Remove container (optional)
+docker rm redis-stack
+
+Redis-Stack is exposed onto
+
+http://localhost:8001
+
+Stop / remove
+================
+docker stop redis-stack
+docker rm redis-stack
+
+
+
+In each application
+================================
+
+cd server
+npm init -y
+npm install express ioredis cors
+node index.js
+
+cd client
+npm run dev 
